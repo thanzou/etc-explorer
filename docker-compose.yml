@@ -7,7 +7,9 @@ services:
     environment:
       MONGO_URI: 'mongodb://db/explorerDB'
     ports:
-      - '3000:3000'
+      - '3003:3000'
+    volumes:
+      - ./config.json:/root/config.json
     depends_on:
       - db
   sync:
@@ -16,6 +18,8 @@ services:
     restart: always
     environment:
       MONGO_URI: 'mongodb://db/explorerDB'
+    volumes:
+      - ./config.json:/root/config.json
     depends_on:
       - db
   stats:
@@ -24,22 +28,28 @@ services:
     restart: always
     environment:
       MONGO_URI: 'mongodb://db/explorerDB'
+    volumes:
+      - ./config.json:/root/config.json
     depends_on:
       - db
-  price:
-    build: .
-    command: ./tools/price.js
-    restart: always
-    environment:
-      MONGO_URI: 'mongodb://db/explorerDB'
-    depends_on:
-      - db
+#  price:
+#    build: .
+#    command: ./tools/price.js
+#    restart: always
+#    environment:
+#      MONGO_URI: 'mongodb://db/explorerDB'
+#    volumes:
+#      - ./config.json:/root/config.json
+#    depends_on:
+#      - db
   richlist:
     build: .
     command: ./tools/richlist.js
     restart: "no"
     environment:
       MONGO_URI: 'mongodb://db/explorerDB'
+    volumes:
+      - ./config.json:/root/config.json
     depends_on:
       - db
   db:
